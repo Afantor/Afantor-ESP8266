@@ -1,0 +1,23 @@
+{
+  "name": "Afantor-ESP8266",
+  "version": "1.0.0",
+  "keywords": "esp8266, ssd1306, oled, display, i2c",
+  "description": "A I2C display driver for SSD1306 oled displays connected to an ESP8266",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/Afantor/Afantor-ESP8266.git"
+  },
+  "authors":
+  [
+    {
+        "name": "Afantor",
+        "email": "13148946269@163.com",
+        "url": "https://www.afantor.cc"
+    },
+  ],
+  "frameworks": "arduino",
+  "platforms": [
+    "espressif8266"
+  ]
+}
