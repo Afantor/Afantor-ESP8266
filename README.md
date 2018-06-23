@@ -2,10 +2,8 @@
 
 # ESP8266 OLED SSD1306
 
-> We just released version 4.0.0. Please have a look at our [upgrade guide](UPGRADE-4.0.md)
-
 This is a driver for the SSD1306 based 128x64 pixel OLED display running on the Arduino/ESP8266 platform.
-Can be used with either the I2C or SPI version of the display
+Can be used with either the I2C version of the display
 
 You can either download this library as a zip file and unpack it to your Arduino/libraries folder or (once it has been added) choose it from the Arduino library manager.
 
@@ -361,12 +359,6 @@ This frame demonstrates the text alignment. The coordinates in the frame show re
 ![DemoFrame4](https://github.com/squix78/esp8266-oled-ssd1306/raw/master/resources/DemoFrame4.jpg)
 
 This shows how to use define a maximum width after which the driver automatically wraps a word to the next line. This comes in very handy if you have longer texts to display.
-
-### SPI version
-
-![SPIVersion](https://github.com/neptune2/esp8266-oled-ssd1306/raw/master/resources/SPI_version.jpg)
-
-This shows the code working on the SPI version of the display. See demo code for ESP8266 pins used.
 
 ## Project using this library
 
