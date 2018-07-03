@@ -29,6 +29,8 @@ SSD1306Wire  display(0x3c, D3, D5);
 
 OLEDDisplayUi ui     ( &display );
 
+uint8_t led = 0;
+
 void msOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) {
   display->setTextAlignment(TEXT_ALIGN_RIGHT);
   display->setFont(ArialMT_Plain_10);
@@ -102,7 +104,7 @@ void setup() {
   Serial.begin(115200);
   Serial.println();
   Serial.println();
-
+	pinMode(LED_BUILTIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
 	// The ESP is capable of rendering 60fps in 80Mhz mode
 	// but that won't give you much time for anything else
 	// run it in 160Mhz mode or just set it to 30 fps
@@ -144,6 +146,8 @@ void loop() {
     // You can do some work here
     // Don't do stuff if you are below your
     // time budget.
+    led = ~led;
+    digitalWrite(LED_BUILTIN, led);   // Turn the LED on (Note that LOW is the voltage level
     delay(remainingTimeBudget);
   }
 }
