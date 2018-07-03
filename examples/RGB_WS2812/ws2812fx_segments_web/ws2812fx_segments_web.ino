@@ -38,7 +38,7 @@
   
 */
 
-#include <WS2812FX.h>
+#include "WS2812FX.h"
 #include <ESP8266WebServer.h>
 #include <ArduinoJson.h>
 #include <ArduinoOTA.h>
@@ -54,7 +54,8 @@ extern const char index_html[];
 WS2812FX ws2812fx = WS2812FX(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 ESP8266WebServer server(80);
 
-void setup() {
+void setup() 
+{
   Serial.begin(115200);
   Serial.println("\r\n");
 
@@ -195,8 +196,9 @@ void setup() {
   ws2812fx.start();
 }
 
-void loop() {
-  ws2812fx.service();
-  server.handleClient();
-  ArduinoOTA.handle();
+void loop() 
+{
+    ws2812fx.service();
+    server.handleClient();
+    ArduinoOTA.handle();
 }

@@ -42,35 +42,12 @@
   virtual devices in the Smart Home section.
 
   See the Espalexa documentation for more details.
-  
-  Keith Lord - 2018
 
   LICENSE
 
   The MIT License (MIT)
 
-  Copyright (c) 2018  Keith Lord 
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sub-license, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-  
-  CHANGELOG
-  2018-06-10 initial version
+  Copyright (c) 2018  Afantor 
 */
 
 #ifdef ARDUINO_ARCH_ESP32
@@ -79,7 +56,7 @@
 #include <ESP8266WiFi.h>
 #endif
 #include <Espalexa.h>
-#include <WS2812FX.h>
+#include "WS2812FX.h"
 
 #define NUMLEDS 13 // number of LEDs on the strip
 #define DATAPIN  13 // GPIO pin used to drive the LED strip
@@ -90,22 +67,26 @@
 /* 
  *  define your ws2812fx presets
  */
-WS2812FX::segment color_preset[MAX_NUM_SEGMENTS] = {
+WS2812FX::segment color_preset[MAX_NUM_SEGMENTS] = 
+{
   // { first, last, speed, mode, options, colors[] }
   {0, NUMLEDS-1, 5000, FX_MODE_STATIC, NO_OPTIONS, {RED, GREEN, BLUE}}
 };
 
-WS2812FX::segment christmas_preset[MAX_NUM_SEGMENTS] = {
+WS2812FX::segment christmas_preset[MAX_NUM_SEGMENTS] = 
+{
   // { first, last, speed, mode, options, colors[] }
   {0, NUMLEDS-1, 5000, FX_MODE_MERRY_CHRISTMAS, NO_OPTIONS, {RED, GREEN, BLACK}}
 };
 
-WS2812FX::segment team_preset[MAX_NUM_SEGMENTS] = {
+WS2812FX::segment team_preset[MAX_NUM_SEGMENTS] = 
+{
   // { first, last, speed, mode, options, colors[] }
   {0, NUMLEDS-1, 5000, FX_MODE_TRICOLOR_CHASE, NO_OPTIONS, {0x805000, 0x805000, 0x000040}} // blue and gold, GO ND!
 };
 
-WS2812FX::segment flag_preset[MAX_NUM_SEGMENTS] = {
+WS2812FX::segment flag_preset[MAX_NUM_SEGMENTS] = 
+{
   // { first, last, speed, mode, options, colors[] }
   {0,             (NUMLEDS/6)*1-1,  500, FX_MODE_FLASH_SPARKLE, NO_OPTIONS, {BLUE,  BLACK, BLACK}},
   {(NUMLEDS/6)*1, (NUMLEDS/6)*2-1,  500, FX_MODE_FLASH_SPARKLE, NO_OPTIONS, {BLUE,  BLACK, BLACK}},
@@ -121,85 +102,96 @@ WS2812FX::segment flag_preset[MAX_NUM_SEGMENTS] = {
 Espalexa espalexa;
 WS2812FX ws2812fx = WS2812FX(NUMLEDS, DATAPIN, NEO_GRB + NEO_KHZ800);
 
-void setup() {
-  Serial.begin(115200);
-  Serial.println("\r\n");
-
-  // init WiFi
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  WiFi.mode(WIFI_STA);
-
-  Serial.print("Connecting to " WIFI_SSID);
-  while(WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.print("\nServer IP is ");
-  Serial.println(WiFi.localIP());
-
-  // add your alexa virtual devices giving them a name and associated callback
-  espalexa.addDevice("L E D lights", ledCallback);
-  espalexa.addDevice("color lights", colorCallback);
-  espalexa.addDevice("flag lights", flagCallback);
-  espalexa.addDevice("team lights", teamCallback);
-  espalexa.addDevice("christmas lights", christmasCallback);
-
-  espalexa.begin();
-
-  ws2812fx.init();
-  ws2812fx.stop(); // ws2812fx is stopped until it receives a command from ALexa 
+void setup() 
+{
+    Serial.begin(115200);
+    Serial.println("\r\n");
+  
+    // init WiFi
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.mode(WIFI_STA);
+  
+    Serial.print("Connecting to " WIFI_SSID);
+    while(WiFi.status() != WL_CONNECTED) 
+    {
+      delay(500);
+      Serial.print(".");
+    }
+    Serial.print("\nServer IP is ");
+    Serial.println(WiFi.localIP());
+  
+    // add your alexa virtual devices giving them a name and associated callback
+    espalexa.addDevice("L E D lights", ledCallback);
+    espalexa.addDevice("color lights", colorCallback);
+    espalexa.addDevice("flag lights", flagCallback);
+    espalexa.addDevice("team lights", teamCallback);
+    espalexa.addDevice("christmas lights", christmasCallback);
+  
+    espalexa.begin();
+  
+    ws2812fx.init();
+    ws2812fx.stop(); // ws2812fx is stopped until it receives a command from ALexa 
 }
  
-void loop() {
-   espalexa.loop();
-   ws2812fx.service();
-   delay(1);
+void loop() 
+{
+    espalexa.loop();
+    ws2812fx.service();
+    delay(1);
 }
 
 /*
  * our callback functions
  */
-void ledCallback(uint8_t brightness) { // used for on, off or adjusting brightness without changing the active preset
-  Serial.print("Loading led ");Serial.println(brightness);
-  loadPreset(NULL, brightness);
+void ledCallback(uint8_t brightness) 
+{ // used for on, off or adjusting brightness without changing the active preset
+    Serial.print("Loading led ");Serial.println(brightness);
+    loadPreset(NULL, brightness);
 }
 
-void colorCallback(uint8_t brightness) {
-  Serial.print("Loading color preset ");Serial.println(brightness);
-  loadPreset(color_preset, brightness);
+void colorCallback(uint8_t brightness) 
+{
+    Serial.print("Loading color preset ");Serial.println(brightness);
+    loadPreset(color_preset, brightness);
 }
 
-void christmasCallback(uint8_t brightness) {
-  Serial.print("Loading christmas preset ");Serial.println(brightness);
-  loadPreset(christmas_preset, brightness);
+void christmasCallback(uint8_t brightness) 
+{
+    Serial.print("Loading christmas preset ");Serial.println(brightness);
+    loadPreset(christmas_preset, brightness);
 }
 
-void teamCallback(uint8_t brightness) {
-  Serial.print("Loading team colors preset ");Serial.println(brightness);
-  loadPreset(team_preset, brightness);
+void teamCallback(uint8_t brightness) 
+{
+    Serial.print("Loading team colors preset ");Serial.println(brightness);
+    loadPreset(team_preset, brightness);
 }
 
-void flagCallback(uint8_t brightness) {
-  Serial.print("Loading flag preset ");Serial.println(brightness);
-  loadPreset(flag_preset, brightness);
+void flagCallback(uint8_t brightness) 
+{
+    Serial.print("Loading flag preset ");Serial.println(brightness);
+    loadPreset(flag_preset, brightness);
 }
 
 /*
  * function loads and runs the specified ws2812fx preset
  */
-void loadPreset(WS2812FX::segment segments[], uint8_t brightness) {
-  ws2812fx.stop();
-  if(brightness == 0) return;
-
-  if(segments != NULL) {
-    ws2812fx.resetSegments();
-    for(int i=0; i<MAX_NUM_SEGMENTS; i++) {
-      WS2812FX::segment seg = segments[i];
-      if(i != 0 && seg.start == 0) break;
-      ws2812fx.setSegment(i, seg.start, seg.stop, seg.mode, seg.colors, seg.speed, seg.options);
+void loadPreset(WS2812FX::segment segments[], uint8_t brightness) 
+{
+    ws2812fx.stop();
+    if(brightness == 0) return;
+  
+    if(segments != NULL) 
+    {
+        ws2812fx.resetSegments();
+        for(int i=0; i<MAX_NUM_SEGMENTS; i++) 
+        {
+            WS2812FX::segment seg = segments[i];
+            if(i != 0 && seg.start == 0) break;
+            ws2812fx.setSegment(i, seg.start, seg.stop, seg.mode, seg.colors, seg.speed, seg.options);
+        }
     }
-  }
-
-  ws2812fx.setBrightness(brightness);
-  ws2812fx.start();
+  
+    ws2812fx.setBrightness(brightness);
+    ws2812fx.start();
 }

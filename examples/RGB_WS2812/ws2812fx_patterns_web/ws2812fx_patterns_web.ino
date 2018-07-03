@@ -4,38 +4,9 @@
   duration and you can setup an array of patterns that play in a continuous loop.
   A web API is included which receives and stores pattern data in JSON format.
   It's the companion sketch for the LEDfx Android app.
-  
-  Keith Lord - 2018
-
-  LICENSE
-
-  The MIT License (MIT)
-
-  Copyright (c) 2018  Keith Lord 
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sub-license, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-  
-  CHANGELOG
-  2018-02-21 initial version
 */
 
-#include <WS2812FX.h>
+#include "WS2812FX.h"
 #include <ESP8266WebServer.h>
 #include <ArduinoJson.h>
 #include <EEPROM.h>
@@ -72,59 +43,62 @@ unsigned long lastTime = 0;
 WS2812FX ws2812fx = WS2812FX(numLeds, dataPin, NEO_GRB + NEO_KHZ800);
 ESP8266WebServer server(HTTP_PORT);
 
-void setup() {
-  Serial.begin(115200);
-  Serial.println("\r\n");
-
-  EEPROM.begin(2048); // for ESP8266 (comment out if using an Arduino)
-
-  // init WiFi
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  WiFi.mode(WIFI_STA);
-
-  Serial.print("Connecting to " WIFI_SSID);
-  while(WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.print("\nServer IP is ");
-  Serial.println(WiFi.localIP());
-
-  // config and start the web server
-  configServer();
-  server.begin();
-
-  // restore pattern data from eeprom
-  restoreFromEEPROM();
-
-  // init LED strip with a default segment
-  ws2812fx.init();
-  ws2812fx.setBrightness(128);
-  ws2812fx.setSegment(0, 0, numLeds-1, FX_MODE_STATIC, RED, 3000, false);
-  ws2812fx.start();
-}
-
-void loop() {
-  ws2812fx.service();
-  server.handleClient();
-
-  // if it's time to change pattern, do it
-  unsigned long now = millis();
-  if(lastTime == 0 || (now - lastTime > patterns[currentPattern].duration * 1000)) {
-    ws2812fx.clear();
-    ws2812fx.resetSegments();
-
-    currentPattern = (currentPattern + 1) % numPatterns;
-    ws2812fx.setBrightness(patterns[currentPattern].brightness);
-    for(int i=0; i<patterns[currentPattern].numSegments; i++) {
-      WS2812FX::segment seg = patterns[currentPattern].segments[i];
-      ws2812fx.setSegment(i, seg.start, seg.stop, seg.mode, seg.colors, seg.speed, seg.options);
+void setup() 
+{
+    Serial.begin(115200);
+    Serial.println("\r\n");
+  
+    EEPROM.begin(2048); // for ESP8266 (comment out if using an Arduino)
+  
+    // init WiFi
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    WiFi.mode(WIFI_STA);
+  
+    Serial.print("Connecting to " WIFI_SSID);
+    while(WiFi.status() != WL_CONNECTED) {
+      delay(500);
+      Serial.print(".");
     }
-    lastTime = now;
-  }
+    Serial.print("\nServer IP is ");
+    Serial.println(WiFi.localIP());
+  
+    // config and start the web server
+    configServer();
+    server.begin();
+  
+    // restore pattern data from eeprom
+    restoreFromEEPROM();
+  
+    // init LED strip with a default segment
+    ws2812fx.init();
+    ws2812fx.setBrightness(128);
+    ws2812fx.setSegment(0, 0, numLeds-1, FX_MODE_STATIC, RED, 3000, false);
+    ws2812fx.start();
 }
 
-void configServer() {
+void loop() 
+{
+    ws2812fx.service();
+    server.handleClient();
+  
+    // if it's time to change pattern, do it
+    unsigned long now = millis();
+    if(lastTime == 0 || (now - lastTime > patterns[currentPattern].duration * 1000)) {
+        ws2812fx.clear();
+        ws2812fx.resetSegments();
+  
+        currentPattern = (currentPattern + 1) % numPatterns;
+        ws2812fx.setBrightness(patterns[currentPattern].brightness);
+        for(int i=0; i<patterns[currentPattern].numSegments; i++) {
+            WS2812FX::segment seg = patterns[currentPattern].segments[i];
+            ws2812fx.setSegment(i, seg.start, seg.stop, seg.mode, seg.colors, seg.speed, seg.options);
+        }
+        lastTime = now;
+    }
+}
+
+void configServer() 
+{
   server.onNotFound([](){
     server.sendHeader("Access-Control-Allow-Origin", "*");
     server.send(404, "text/plain", "Page not found");
@@ -248,7 +222,8 @@ void configServer() {
 }
 
 #define EEPROM_MAGIC_NUMBER 0x010e0d05
-void saveToEEPROM() {
+void saveToEEPROM() 
+{
   Serial.println("saving to EEPROM");
   EEPROM.put(sizeof(int) * 0, (int)EEPROM_MAGIC_NUMBER);
   EEPROM.put(sizeof(int) * 1, (int)ws2812fx.getPin());
@@ -258,12 +233,14 @@ void saveToEEPROM() {
   EEPROM.commit(); // for ESP8266 (comment out if using an Arduino)
 }
 
-void restoreFromEEPROM() {
+void restoreFromEEPROM() 
+{
   int magicNumber = 0;
   int pin;
   int length;
   EEPROM.get(sizeof(int) * 0, magicNumber);
-  if(magicNumber == EEPROM_MAGIC_NUMBER) {
+  if(magicNumber == EEPROM_MAGIC_NUMBER) 
+  {
     Serial.println("restoring from EEPROM");
     EEPROM.get(sizeof(int) * 1, pin);
     ws2812fx.setPin(pin);
@@ -274,9 +251,12 @@ void restoreFromEEPROM() {
   }
 }
 
-int modeName2Index(const char* name) {
-  for (int i = 0; i< ws2812fx.getModeCount(); i++){
-    if(strcmp_P(name, (PGM_P)ws2812fx.getModeName(i)) == 0) {
+int modeName2Index(const char* name) 
+{
+  for (int i = 0; i< ws2812fx.getModeCount(); i++)
+  {
+    if(strcmp_P(name, (PGM_P)ws2812fx.getModeName(i)) == 0) 
+    {
       return i;
     }
   }

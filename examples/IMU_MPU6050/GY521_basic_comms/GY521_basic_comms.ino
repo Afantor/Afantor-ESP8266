@@ -2,11 +2,13 @@
 
 const int MPU_addr=0x69;  // I2C address of the MPU-6050
 
+#define IIC_SDA D3
+#define IIC_SCL D5
 
 void setup() {
   // put your setup code here, to run once:
-  Wire.begin();
-
+  Wire.begin(D3,D5);
+  //Wire.begin(this->_sda, this->_scl);
   Serial.begin(115200);
 }
 
