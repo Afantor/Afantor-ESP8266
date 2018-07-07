@@ -2,8 +2,8 @@
  */
 #include "LEDMatrix.h"
 
-#define DATA_PIN 9
-#define CLK_PIN  10
+#define DATA_PIN 13
+#define CLK_PIN  0
 
 
 LEDMatrix ledMx(CLK_PIN,DATA_PIN);
