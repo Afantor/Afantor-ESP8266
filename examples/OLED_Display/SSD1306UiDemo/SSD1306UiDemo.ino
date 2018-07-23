@@ -20,7 +20,7 @@
 // Initialize the OLED display using Wire library
 // D3 -> SDA
 // D5 -> SCL
-SSD1306Wire  display(0x3c, D3, D5);
+SSD1306Wire  display(0x3c, 12, 4);
 
 OLEDDisplayUi ui(&display);
 

@@ -14,7 +14,7 @@
  // D3 -> SDA
  // D5 -> SCL
  // Initialize the OLED display using Wire library
- SSD1306Wire  display(0x3c, D3, D5);
+ SSD1306Wire  display(0x3c, 12, 4);
 
 // Adapted from Adafruit_SSD1306
 void drawLines() 
