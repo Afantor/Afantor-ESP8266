@@ -1,0 +1,5 @@
+1¡¢ESP8266¹Ù·½Arduino°²×°¿â£ºhttps://github.com/esp8266/Arduino£»
+2¡¢ArduinoJson¿â£ºhttps://github.com/bblanchon/ArduinoJson£»
+3¡¢ESPAsyncTCP¿â£ºhttps://github.com/me-no-dev/ESPAsyncTCP£»
+4¡¢IRremoteESP8266¿â£ºhttps://github.com/markszabo/IRremoteESP8266£»
+5¡¢ESP8266Audio¿â£ºhttps://github.com/earlephilhower/ESP8266Audio¡£
