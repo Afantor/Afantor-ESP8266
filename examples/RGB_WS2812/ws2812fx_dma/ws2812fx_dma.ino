@@ -29,7 +29,7 @@ void setup()
     // set the custom show function
     ws2812fx.setCustomShow(myCustomShow);
   
-    ws2812fx.setBrightness(255);
+    ws2812fx.setBrightness(55);
     const uint32_t colors[] = {RED, BLACK, BLACK};
     ws2812fx.setSegment(0, 0, LED_COUNT-1, FX_MODE_COMET, colors, 2000, NO_OPTIONS);
   

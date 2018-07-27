@@ -24,7 +24,7 @@ unsigned long now = 0;
 void setup() 
 {
     ws2812fx.init();
-    ws2812fx.setBrightness(255);
+    ws2812fx.setBrightness(55);
     ws2812fx.setMode(FX_MODE_RANDOM_COLOR);
 }
 

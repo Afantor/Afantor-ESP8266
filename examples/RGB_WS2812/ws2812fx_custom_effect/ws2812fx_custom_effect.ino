@@ -10,7 +10,7 @@ void setup()
     Serial.begin(115200);
     
     ws2812fx.init();
-    ws2812fx.setBrightness(255);
+    ws2812fx.setBrightness(55);
   
     // segment 0 is the builtin comet effect
     ws2812fx.setSegment(0, 0,           LED_COUNT/2 - 1, FX_MODE_COMET,  RED, 1000, false);

@@ -26,7 +26,7 @@ extern const char main_js[];
 #define HTTP_PORT     80
 
 #define DEFAULT_COLOR       0xFF5900
-#define DEFAULT_BRIGHTNESS  255
+#define DEFAULT_BRIGHTNESS  55
 #define DEFAULT_SPEED       1000
 #define DEFAULT_MODE        FX_MODE_STATIC
 

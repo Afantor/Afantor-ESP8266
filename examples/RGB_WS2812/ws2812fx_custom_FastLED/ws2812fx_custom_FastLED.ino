@@ -25,7 +25,7 @@ void setup()
   
     // init WS2812FX to use a custom effect
     ws2812fx.init();
-    ws2812fx.setBrightness(255);
+    ws2812fx.setBrightness(55);
     ws2812fx.setColor(BLUE);
     ws2812fx.setSpeed(1000);
     ws2812fx.setMode(FX_MODE_CUSTOM);
