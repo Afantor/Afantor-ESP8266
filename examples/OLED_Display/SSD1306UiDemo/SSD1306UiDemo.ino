@@ -24,8 +24,6 @@ SSD1306Wire  display(0x3c, 12, 4);
 
 OLEDDisplayUi ui(&display);
 
-uint8_t led = 0;
-
 void msOverlay(OLEDDisplay *display, OLEDDisplayUiState* state) 
 {
     display->setTextAlignment(TEXT_ALIGN_RIGHT);
@@ -150,8 +148,6 @@ void loop()
         // You can do some work here
         // Don't do stuff if you are below your
         // time budget.
-        led = ~led;
-        digitalWrite(LED_BUILTIN, led);   // Turn the LED on (Note that LOW is the voltage level
         delay(remainingTimeBudget);
     }
 }
