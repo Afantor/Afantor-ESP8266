@@ -14,7 +14,7 @@ void setup()
   ledMx.setColorIndex(1);
 }
 
-char *s = "AB";
+char *s = "ABC";
 
 void loop()
 {
