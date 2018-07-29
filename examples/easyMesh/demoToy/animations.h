@@ -4,9 +4,9 @@
 #include <NeoPixelBus.h>
 #include <NeoPixelAnimator.h>
 
-#define PIXEL_COUNT       16  // make sure to set this to the number of pixels in your strip
-#define PIXEL_PIN         2  // make sure to set this to the correct pin, ignored for Esp8266
-#define ANIMATION_COUNT   3
+#define PIXEL_COUNT       13  // make sure to set this to the number of pixels in your strip
+#define PIXEL_PIN         13  // make sure to set this to the correct pin, ignored for Esp8266
+#define ANIMATION_COUNT   4
 
 #define MAX_BLIPS         4
 
