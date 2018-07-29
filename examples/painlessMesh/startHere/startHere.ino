@@ -11,8 +11,8 @@
 #include <painlessMesh.h>
 
 // some gpio pin that is connected to an LED...
-// on my rig, this is 5, change to the right number of your LED.
-#define   LED             2       // GPIO number of connected LED, ON ESP-12 IS GPIO2
+// on my rig, this is 16, change to the right number of your LED.
+#define   LED             16       // GPIO number of connected LED, ON ESP-12 IS GPIO16
 
 #define   BLINK_PERIOD    3000 // milliseconds until cycle repeat
 #define   BLINK_DURATION  100  // milliseconds LED is on for

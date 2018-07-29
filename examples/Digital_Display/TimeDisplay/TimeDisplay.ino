@@ -1,7 +1,7 @@
 #include "DigitalDisplay.h"
 
-#define DATA_PIN 9
-#define CLK_PIN  10
+#define DATA_PIN 13
+#define CLK_PIN  0
 
 DigitalDisplay disp(DATA_PIN,CLK_PIN);
 

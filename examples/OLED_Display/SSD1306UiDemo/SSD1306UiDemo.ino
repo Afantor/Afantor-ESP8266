@@ -104,7 +104,6 @@ void setup()
     Serial.begin(115200);
     Serial.println();
     Serial.println();
-	pinMode(LED_BUILTIN, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
 	// The ESP is capable of rendering 60fps in 80Mhz mode
 	// but that won't give you much time for anything else
 	// run it in 160Mhz mode or just set it to 30 fps

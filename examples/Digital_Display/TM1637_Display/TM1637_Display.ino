@@ -5,8 +5,8 @@
 
 //#define CLK D1
 //#define DIO D2
-#define CLK 5
-#define DIO 4
+#define CLK 0
+#define DIO 13
 TM1637 tm1637(CLK, DIO);
 
 
