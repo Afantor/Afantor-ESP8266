@@ -25,6 +25,7 @@ void loop()
 	    ledMx.showClock(12,03,1);
   		// delay(2000);
 	}
+<<<<<<< HEAD
   else
   {
       ledMx.showNum(1.23);
@@ -32,3 +33,12 @@ void loop()
   
 }
 
+=======
+  	if(digitalRead(BUTTON1_PIN)==0)
+	{
+	    ledMx.drawStr(0,7,s);
+  		// delay(2000);
+	}
+  	ledMx.showNum(1.23);
+}
+>>>>>>> 68e29cc7e7c649736ade4098c478c4e8535d8f11
